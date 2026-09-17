@@ -43,6 +43,10 @@ services:
         condition: service_healthy
     profiles:
       - production
+    # The image carries no .env files (see Dockerfile), so the runtime config is injected here.
+    env_file:
+      - .env
+      - .env.production
     environment:
       APPLICATION_ENV: production
       NODE_ENV: production

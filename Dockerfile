@@ -41,9 +41,8 @@ FROM base AS production
 
 WORKDIR /usr/src/app
 
-COPY .env   ./
-COPY .env.* ./
-
+# No .env files are baked in: configuration reaches the container through compose `environment`
+# / `env_file`, so a fresh clone builds without them and no secret lands in an image layer.
 COPY package.json bun.lock tsconfig.json ./
 COPY --from=deps-prod /usr/src/app/node_modules ./node_modules
 
