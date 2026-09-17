@@ -1,0 +1,93 @@
+# ######################################################################################################################
+# ======================================================================================================================
+# ----------------------------------------------------------------------------------------------------------------------
+# @file docker-compose.yml
+# @fileOverview this file will run application with all dependencies
+# @dependencies .env
+#
+# Development ----------------------------------------------------------------------------------------------------------
+#   Only Postgres + Redis come up; the app itself is meant to run natively on the host
+#   (`bun run start:debug`) so WebStorm can attach to the inspector on APPLICATION_DEBUG_PORT.
+# @Start :: docker compose up -d
+# @Stop  :: docker compose down
+#
+# Production -----------------------------------------------------------------------------------------------------------
+# @build :: docker compose --profile production build --no-cache
+# @Start :: docker compose --profile production up --build -d
+# @Stop  :: docker compose --profile production down
+#
+# Other ----------------------------------------------------------------------------------------------------------------
+# @StopAndRemove :: docker compose --profile production down -v
+#
+
+services:
+
+  # ####################################################################################################################
+  # ====================================================================================================================
+  # Application --------------------------------------------------------------------------------------------------------
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        APPLICATION_INTERNAL_PORT: ${APPLICATION_INTERNAL_PORT}
+    container_name: zexserver-backend
+    ports:
+      - ${APPLICATION_EXTERNAL_PORT}:${APPLICATION_INTERNAL_PORT}
+    # Wait for the stores to pass their healthchecks, not merely to have started - the app runs
+    # migrations on boot and would crash-loop against a Postgres that is still initialising.
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    profiles:
+      - production
+    environment:
+      APPLICATION_ENV: production
+      NODE_ENV: production
+    restart: unless-stopped
+    mem_limit: 512m
+    mem_reservation: 256m
+
+  # ####################################################################################################################
+  # ====================================================================================================================
+  # PostgreSQL ---------------------------------------------------------------------------------------------------------
+  postgres:
+    image: postgres:16
+    container_name: zexserver-postgres-db
+    ports:
+      - ${POSTGRES_DB_EXTERNAL_PORT}:${POSTGRES_DB_INTERNAL_PORT}
+    environment:
+      POSTGRES_USER: ${POSTGRES_DB_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRES_DB_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB_NAME}
+    volumes:
+      - zexserver_postgres_volume:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_DB_USERNAME} -d ${POSTGRES_DB_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # ####################################################################################################################
+  # ====================================================================================================================
+  # RedisDB ------------------------------------------------------------------------------------------------------------
+  redis:
+    image: redis:7
+    container_name: zexserver-redis
+    ports:
+      - ${REDIS_EXTERNAL_PORT}:${REDIS_INTERNAL_PORT}
+    volumes:
+      - zexserver_redis_volume:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+volumes:
+  zexserver_postgres_volume:
+  zexserver_redis_volume:
