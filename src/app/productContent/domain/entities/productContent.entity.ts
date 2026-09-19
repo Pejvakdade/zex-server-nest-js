@@ -56,6 +56,9 @@ export class ProductContentEntity extends AbstractEntity implements ProductConte
   @Column({ type: 'jsonb', default: () => "'[]'" })
   gridTwo: Array<ProductContentNamespace.IIconLabel>;
 
+  @Column({ type: 'jsonb', default: () => "'[]'" })
+  includedFeatures: Array<ProductContentNamespace.ITextItem>;
+
   @Column({ type: 'text', array: true, default: () => "'{}'" })
   locationCities: Array<string>;
 }

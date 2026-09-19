@@ -69,9 +69,6 @@ const statusCode = {
       NOT_FOUND: 6350,
       IS_DUPLICATED: 6351,
     },
-    CONTACT_MESSAGE: {
-      NOT_FOUND: 6400,
-    },
     SITE_CONTENT: {
       NOT_FOUND: 6450,
     },

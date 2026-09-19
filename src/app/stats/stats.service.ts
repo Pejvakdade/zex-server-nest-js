@@ -12,7 +12,6 @@
  */
 import { Injectable } from '@nestjs/common';
 
-import { ContactMessageService } from '@src/app/contactMessage/contactMessage.service';
 import { InvoiceService } from '@src/app/invoice/invoice.service';
 import { LicenseRepository } from '@src/app/license/domain/repositories/license.repository';
 import { LocationRepository } from '@src/app/location/domain/repositories/location.repository';
@@ -30,7 +29,6 @@ export class StatsService {
     private readonly userRepository: UserRepository,
     private readonly planRepository: PlanRepository,
     private readonly licenseRepository: LicenseRepository,
-    private readonly contactMessageService: ContactMessageService,
     private readonly serviceService: ServiceService,
     private readonly ticketService: TicketService,
     private readonly invoiceService: InvoiceService,
@@ -54,7 +52,7 @@ export class StatsService {
 
   /** Dashboard Overview cards. */
   public async overview(): Promise<StatsNamespace.IAdminOverview> {
-    const [customers, admins, staff, plans, licenses, locations, newMessages, activeServices, openTickets, revenue] =
+    const [customers, admins, staff, plans, licenses, locations, activeServices, openTickets, revenue] =
       await Promise.all([
         this.userRepository.countDocuments({ userType: UserNamespace.EUserType.CLIENT }),
         this.userRepository.countDocuments({ userType: UserNamespace.EUserType.ADMIN }),
@@ -62,7 +60,6 @@ export class StatsService {
         this.planRepository.countDocuments({ isActive: true }),
         this.licenseRepository.countDocuments({ isActive: true }),
         this.locationRepository.countDocuments({ isActive: true }),
-        this.contactMessageService.countNew(),
         this.serviceService.countLive(),
         this.ticketService.countOpen(),
         this.invoiceService.revenue(),
@@ -74,7 +71,6 @@ export class StatsService {
       plans,
       licenses,
       locations,
-      newMessages,
       activeServices,
       openTickets,
       revenue,

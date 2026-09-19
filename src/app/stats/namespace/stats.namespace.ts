@@ -30,8 +30,6 @@ export namespace StatsNamespace {
     plans: number | null;
     licenses: number | null;
     locations: number | null;
-    /** Contact-form messages still marked New. */
-    newMessages: number | null;
     /** Services in Running / Active status. Source: the `service` table. */
     activeServices: number | null;
     /** Tickets in status Open. Source: the `ticket` table. */

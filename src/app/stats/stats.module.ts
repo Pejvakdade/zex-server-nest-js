@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 
-import { ContactMessageModule } from '@src/app/contactMessage/contactMessage.module';
 import { InvoiceModule } from '@src/app/invoice/invoice.module';
 import { LicenseModule } from '@src/app/license/license.module';
 import { LocationModule } from '@src/app/location/location.module';
@@ -18,7 +17,6 @@ import { StatsController } from './stats.controller';
     UsersModule,
     PlanModule,
     LicenseModule,
-    ContactMessageModule,
     ServiceModule,
     TicketModule,
     InvoiceModule,

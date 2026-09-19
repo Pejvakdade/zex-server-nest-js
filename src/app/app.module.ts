@@ -37,7 +37,6 @@ import { PlanModule } from './plan/plan.module';
 import { LocationModule } from './location/location.module';
 import { ProductContentModule } from './productContent/productContent.module';
 import { SiteContentModule } from './siteContent/siteContent.module';
-import { ContactMessageModule } from './contactMessage/contactMessage.module';
 import { LicenseModule } from './license/license.module';
 import { ServiceModule } from './service/service.module';
 import { InvoiceModule } from './invoice/invoice.module';
@@ -125,7 +124,6 @@ import { TicketModule } from './ticket/ticket.module';
     PlanModule,
     ProductContentModule,
     SiteContentModule,
-    ContactMessageModule,
     LicenseModule,
     ServiceModule,
     InvoiceModule,

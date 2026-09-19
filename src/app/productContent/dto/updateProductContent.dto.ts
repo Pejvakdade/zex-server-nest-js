@@ -18,6 +18,10 @@ class IconLabelDto {
   @ApiPropertyOptional() @IsString() @MaxLength(80) label: string;
 }
 
+class TextItemDto {
+  @ApiPropertyOptional() @IsString() @MaxLength(120) label: string;
+}
+
 class FaqItemDto {
   @ApiPropertyOptional() @IsString() @MaxLength(300) question: string;
   @ApiPropertyOptional() @IsString() answer: string;
@@ -70,6 +74,13 @@ export class UpdateProductContentDto {
   @ValidateNested({ each: true })
   @Type(() => IconLabelDto)
   gridTwo?: Array<IconLabelDto>;
+
+  @ApiPropertyOptional({ type: [TextItemDto] })
+  @IsOptional()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => TextItemDto)
+  includedFeatures?: Array<TextItemDto>;
 
   @ApiPropertyOptional({ type: [String], example: ['Frankfurt', 'New York'] })
   @IsOptional()

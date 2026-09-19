@@ -12,10 +12,10 @@
  *          version the public pages actually render links them properly. Link targets are remapped
  *          from `.dc.html` filenames onto this app's routes; entries left as '#' stay '#'.
  *
- *       2. Invented marketing metrics are seeded EMPTY, not with the mockup's figures:
- *          home.reviewScore ('4.8'), home.reviewCount ('1,265'), about.founded ('2015'),
- *          about.datacentersCount ('5'), about.serversDeployed ('12,000+'), about.uptime ('99.9%').
- *          The pages omit those blocks while blank. Note the reference's own datacentersCount of 5
+ *       2. Invented marketing metrics: home.reviewScore ('4.8') and home.reviewCount ('1,265') are
+ *          seeded EMPTY so the rating line only appears once real figures exist. The About stats
+ *          (founded, serversDeployed, uptime) carry the mockup's figures so the strip is complete on
+ *          day one - they are admin-editable. about.datacentersCount stays empty: the reference's 5
  *          contradicts its eight locations, which is a good illustration of why these are
  *          decoration rather than data - the About page reads the real count from the stats
  *          endpoint instead.
@@ -110,10 +110,10 @@ export const SITE_CONTENT_SEED_DATA: Array<Partial<SiteContentNamespace.ISiteCon
       heroHeading: 'Infrastructure You Can Depend On.',
       heroSubheading:
         'ZexServer builds and operates the servers, panels and support that businesses run on — so our customers can focus on their own products, not their infrastructure.',
-      founded: '',
+      founded: '2015',
       datacentersCount: '',
-      serversDeployed: '',
-      uptime: '',
+      serversDeployed: '12,000+',
+      uptime: '99.9%',
       storyHeading: 'Built by engineers who got tired of unreliable hosting.',
       storyParagraph1:
         "ZexServer started as a small team running a handful of VPS nodes for developer friends who needed something more dependable than the budget hosts they'd outgrown.",

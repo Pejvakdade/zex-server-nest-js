@@ -25,6 +25,11 @@ export namespace ProductContentNamespace {
     answer: string;
   }
 
+  /** A plain checklist line — kept as an object so the admin group editor can manage it like the others. */
+  export interface ITextItem {
+    label: string;
+  }
+
   export interface IProductContent extends AbstractEntity {
     /**
      * Not PlanNamespace.EPlanProduct: the reference also carries content for "Software Licenses",
@@ -52,6 +57,13 @@ export namespace ProductContentNamespace {
     gridTwoTitle: string;
     gridTwoSubtitle: string;
     gridTwo: Array<IIconLabel>;
+
+    /**
+     * Extras listed on the selected plan's card after its own specs — "Free SSL Certificate",
+     * "LiteSpeed Web Server" and so on. The reference hardcoded these per page; here they are
+     * content so they can be edited without a deploy.
+     */
+    includedFeatures: Array<ITextItem>;
 
     /**
      * Cities this product is marketed in, by name only.

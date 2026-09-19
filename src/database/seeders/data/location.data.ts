@@ -3,8 +3,8 @@
  * @fileOverview the eight datacenter locations, extracted verbatim from
  *               ../ZexServerAdditionalPages/Locations.dc.html (cards) and locations-map.html (coordinates).
  *
- * @note Only five of the eight cities have coordinates in the reference map file; the other three are
- *       null rather than guessed. Fill them in when real coordinates are confirmed.
+ * @note The reference map file only plotted five cities. Los Angeles, Singapore and Tokyo use the
+ *       well-known city-centre coordinates so every datacenter appears on the world map.
  *
  *       This file was generated from the reference, not typed by hand - re-extract rather than edit
  *       if the reference changes.
@@ -92,8 +92,8 @@ export const LOCATION_SEED_DATA: Array<Partial<LocationNamespace.ILocation>> = [
     latencyValue: '<5ms',
     products: ['VPS', 'Web Hosting', 'Dedicated'],
     description: 'Best latency for West Coast US and a gateway to Asia-Pacific routes.',
-    latitude: null,
-    longitude: null,
+    latitude: 34.05,
+    longitude: -118.24,
     sortOrder: 5,
   },
   {
@@ -106,8 +106,8 @@ export const LOCATION_SEED_DATA: Array<Partial<LocationNamespace.ILocation>> = [
     latencyValue: '<10ms',
     products: ['VPS', 'Dedicated Servers'],
     description: 'A key APAC hub with excellent reach across Southeast Asia and Australia.',
-    latitude: null,
-    longitude: null,
+    latitude: 1.35,
+    longitude: 103.82,
     sortOrder: 6,
   },
   {
@@ -120,8 +120,8 @@ export const LOCATION_SEED_DATA: Array<Partial<LocationNamespace.ILocation>> = [
     latencyValue: '<8ms',
     products: ['VPS', 'Windows VPS'],
     description: 'Low-latency access to Japan and North Asia with a highly reliable power grid.',
-    latitude: null,
-    longitude: null,
+    latitude: 35.68,
+    longitude: 139.69,
     sortOrder: 7,
   },
 ];
