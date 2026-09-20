@@ -53,4 +53,15 @@ export class ServiceRepository extends AbstractRepository<ServiceEntity> {
 
     return { docs, totalDocs, limit, page, totalPages: Math.ceil(totalDocs / limit) };
   }
+
+  /** Highest numeric suffix among ids with this prefix (`VPS-1042` → 1042); 0 when there are none. */
+  public async maxNumberForPrefix(prefix: string): Promise<number> {
+    const row = await this.repository
+      .createQueryBuilder('service')
+      .select(`MAX(CAST(SUBSTRING(service.serviceId FROM '[0-9]+$') AS INTEGER))`, 'max')
+      .where('service.serviceId LIKE :like', { like: `${prefix}-%` })
+      .getRawOne<{ max: string | null }>();
+
+    return row?.max ? parseInt(row.max, 10) : 0;
+  }
 }

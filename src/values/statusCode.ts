@@ -69,6 +69,10 @@ const statusCode = {
       NOT_FOUND: 6350,
       IS_DUPLICATED: 6351,
     },
+    ORDER: {
+      PLAN_INACTIVE: 6400,
+      LICENSE_NOT_FOUND: 6401,
+    },
     SITE_CONTENT: {
       NOT_FOUND: 6450,
     },

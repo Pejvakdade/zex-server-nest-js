@@ -41,6 +41,7 @@ import { LicenseModule } from './license/license.module';
 import { ServiceModule } from './service/service.module';
 import { InvoiceModule } from './invoice/invoice.module';
 import { TicketModule } from './ticket/ticket.module';
+import { OrderModule } from './order/order.module';
 
 /** --------------------------------------------------------------------------------------------------------------------
  * @define AppModule the main module
@@ -128,6 +129,7 @@ import { TicketModule } from './ticket/ticket.module';
     ServiceModule,
     InvoiceModule,
     TicketModule,
+    OrderModule,
     StatsModule,
     HealthModule,
   ],

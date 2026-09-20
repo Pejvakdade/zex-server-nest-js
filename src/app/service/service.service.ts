@@ -6,6 +6,7 @@ import { ConflictException, ForbiddenException, Injectable, NotFoundException } 
 import { In } from 'typeorm';
 
 import { TFindWithPaginationResult } from '@libs/database/src/postgres/type/findWithPagination.type';
+import { PlanNamespace } from '@src/app/plan/namespace/plan.namespace';
 import type { TActor } from '@src/common/actor';
 import { isStaff } from '@src/common/actor';
 import values from '@src/values';
@@ -64,6 +65,13 @@ export class ServiceService {
     }
 
     return service;
+  }
+
+  /** The next free human id for a product, e.g. VPS-1043 — used when a customer orders a plan. */
+  public async nextServiceId(product: PlanNamespace.EPlanProduct): Promise<string> {
+    const prefix = ServiceNamespace.ID_PREFIX[product];
+    const max = await this.serviceRepository.maxNumberForPrefix(prefix);
+    return `${prefix}-${Math.max(max + 1, ServiceNamespace.FIRST_NUMBER)}`;
   }
 
   public async create(dto: CreateServiceDto): Promise<ServiceEntity> {

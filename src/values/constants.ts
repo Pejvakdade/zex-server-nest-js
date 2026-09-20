@@ -22,6 +22,9 @@ export const ADMIN_ROLES: Array<UserNamespace.EUserType> = [
 
 export const ADMIN_ONLY: Array<UserNamespace.EUserType> = [UserNamespace.EUserType.ADMIN];
 
+/** Customer-only actions — ordering a plan is something staff do *for* a customer, never for themselves. */
+export const CLIENT_ONLY: Array<UserNamespace.EUserType> = [UserNamespace.EUserType.CLIENT];
+
 export const ANY_SIGNED_IN: Array<UserNamespace.EUserType> = [
   UserNamespace.EUserType.ADMIN,
   UserNamespace.EUserType.STAFF,

@@ -18,6 +18,19 @@ export namespace ServiceNamespace {
     ACTIVE = 'Active',
   }
 
+  /** Human-id prefix per product — VPS-1042, WVP-2077, … — the same shapes the seed data uses. */
+  export const ID_PREFIX: Record<PlanNamespace.EPlanProduct, string> = {
+    [PlanNamespace.EPlanProduct.VPS_HOSTING]: 'VPS',
+    [PlanNamespace.EPlanProduct.WINDOWS_VPS]: 'WVP',
+    [PlanNamespace.EPlanProduct.TRADING_VPS]: 'TVP',
+    [PlanNamespace.EPlanProduct.DEDICATED_SERVERS]: 'DED',
+    [PlanNamespace.EPlanProduct.WEB_HOSTING]: 'WEB',
+    [PlanNamespace.EPlanProduct.WORDPRESS_HOSTING]: 'WP',
+  };
+
+  /** Generated ids start here so they never collide with the seeded ones. */
+  export const FIRST_NUMBER = 1000;
+
   /** The statuses that count as "in service" for the fleet / overview counters. */
   export const LIVE_STATUSES: Array<EStatus> = [EStatus.RUNNING, EStatus.ACTIVE];
 
