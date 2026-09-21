@@ -16,7 +16,9 @@ import { InvoiceService } from '@src/app/invoice/invoice.service';
 import { LicenseRepository } from '@src/app/license/domain/repositories/license.repository';
 import { LocationRepository } from '@src/app/location/domain/repositories/location.repository';
 import { PlanRepository } from '@src/app/plan/domain/repositories/plan.repository';
+import { InvoiceNamespace } from '@src/app/invoice/namespace/invoice.namespace';
 import { ServiceService } from '@src/app/service/service.service';
+import { TicketNamespace } from '@src/app/ticket/namespace/ticket.namespace';
 import { TicketService } from '@src/app/ticket/ticket.service';
 import { UserNamespace } from '@src/app/user/namespace/user.namespace';
 import { UserRepository } from '@src/app/user/domain/repositories/user.repository';
@@ -75,5 +77,76 @@ export class StatsService {
       openTickets,
       revenue,
     };
+  }
+
+  /**
+   * Overview's "Recent activity" + the bell: the latest rows from tickets, invoices, services and
+   * customer sign-ups, flattened into one list and sorted newest first. Each source contributes up
+   * to `limit` rows so a burst in one table cannot hide the others entirely.
+   */
+  public async activity(limit = 10): Promise<Array<StatsNamespace.IActivityItem>> {
+    const customerName = (user?: { company?: string | null; fullName?: string }): string =>
+      user?.company || user?.fullName || 'Unknown customer';
+
+    const [tickets, invoices, services, customers] = await Promise.all([
+      this.ticketService.recent(limit),
+      this.invoiceService.recent(limit),
+      this.serviceService.recent(limit),
+      this.userRepository.findWithPagination(
+        { userType: UserNamespace.EUserType.CLIENT },
+        { page: 1, limit, sort: { createdAt: 'DESC' } },
+      ),
+    ]);
+
+    const items: Array<StatsNamespace.IActivityItem> = [
+      ...tickets.map((ticket) => ({
+        id: `ticket:${ticket._id}`,
+        kind: 'ticket' as const,
+        event:
+          ticket.status === TicketNamespace.EStatus.CLOSED
+            ? `Ticket #${ticket.number} closed`
+            : ticket.status === TicketNamespace.EStatus.PENDING
+              ? `Ticket #${ticket.number} answered`
+              : `Ticket #${ticket.number} opened`,
+        product: ticket.service?.product ?? null,
+        customer: customerName(ticket.customer),
+        at: ticket.lastActivityAt,
+        needsAttention: ticket.status === TicketNamespace.EStatus.OPEN,
+      })),
+      ...invoices.map((invoice) => ({
+        id: `invoice:${invoice._id}`,
+        kind: 'invoice' as const,
+        event:
+          invoice.status === InvoiceNamespace.EStatus.PAID
+            ? `Invoice ${invoice.number} paid`
+            : invoice.status === InvoiceNamespace.EStatus.OVERDUE
+              ? `Invoice ${invoice.number} overdue`
+              : `Invoice ${invoice.number} issued`,
+        product: invoice.product ?? invoice.service?.product ?? null,
+        customer: customerName(invoice.customer),
+        at: invoice.paidAt ?? invoice.updatedAt,
+        needsAttention: invoice.status === InvoiceNamespace.EStatus.OVERDUE,
+      })),
+      ...services.map((service) => ({
+        id: `service:${service._id}`,
+        kind: 'service' as const,
+        event: `New service provisioned (${service.serviceId})`,
+        product: service.product,
+        customer: customerName(service.customer),
+        at: service.createdAt,
+        needsAttention: false,
+      })),
+      ...customers.docs.map((user) => ({
+        id: `customer:${user._id}`,
+        kind: 'customer' as const,
+        event: 'New customer',
+        product: null,
+        customer: customerName(user),
+        at: user.createdAt,
+        needsAttention: false,
+      })),
+    ];
+
+    return items.sort((a, b) => new Date(b.at).getTime() - new Date(a.at).getTime()).slice(0, limit);
   }
 }

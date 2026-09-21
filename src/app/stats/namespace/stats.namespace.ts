@@ -37,4 +37,20 @@ export namespace StatsNamespace {
     /** Sum of paid invoices. Source: the `invoice` table. */
     revenue: number | null;
   }
+
+  /** One row of the Overview's "Recent activity" table and the topbar bell. */
+  export interface IActivityItem {
+    /** Stable per source row so the bell can remember what was seen: `ticket:<id>` etc. */
+    id: string;
+    kind: 'ticket' | 'invoice' | 'service' | 'customer';
+    /** "Ticket opened", "Invoice paid", "New service provisioned", "New customer" … */
+    event: string;
+    /** Product name, or null for events without one (a new customer). */
+    product: string | null;
+    /** Company name, else the full name. */
+    customer: string;
+    at: Date;
+    /** True for things staff still need to act on (open ticket, overdue invoice). */
+    needsAttention: boolean;
+  }
 }

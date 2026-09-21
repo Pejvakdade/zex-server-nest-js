@@ -137,4 +137,13 @@ export class TicketService {
   public async countOpen(): Promise<number> {
     return this.ticketRepository.countDocuments({ status: TicketNamespace.EStatus.OPEN });
   }
+
+  /** Newest activity first, customer populated — feeds the dashboard's Recent activity. */
+  public async recent(limit: number): Promise<Array<TicketEntity>> {
+    const { docs } = await this.ticketRepository.findWithPagination(
+      {},
+      { page: 1, limit, sort: { lastActivityAt: 'DESC' }, populate: ['customer', 'service'] },
+    );
+    return docs;
+  }
 }

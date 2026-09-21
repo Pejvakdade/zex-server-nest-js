@@ -19,6 +19,8 @@ import {
   BLOG_COVER_MIN_HEIGHT,
   BLOG_COVER_MIN_WIDTH,
   BLOG_COVER_UPLOAD_DIR,
+  BRAND_MIME_TYPES,
+  BRAND_UPLOAD_DIR,
 } from '@src/values/constants';
 
 export interface IUploadedImage {
@@ -58,7 +60,9 @@ export class UploadService {
 
   /** Writes the buffer under `public/<directory>` with a random name; the extension comes from the mime type, never the client. */
   private async store(file: Express.Multer.File, directory: string): Promise<string> {
-    const extension = { 'image/jpeg': '.jpg', 'image/png': '.png', 'image/webp': '.webp' }[file.mimetype] ?? extname(file.originalname);
+    const extension =
+      { 'image/jpeg': '.jpg', 'image/png': '.png', 'image/webp': '.webp', 'image/svg+xml': '.svg', 'image/x-icon': '.ico', 'image/vnd.microsoft.icon': '.ico' }[file.mimetype] ??
+      extname(file.originalname);
     const fileName = `${randomUUID()}${extension}`;
     const target = join(this.publicRoot, directory);
 
@@ -93,5 +97,22 @@ export class UploadService {
     }
 
     return { url: await this.store(file, BLOG_COVER_UPLOAD_DIR), width, height };
+  }
+
+  /**
+   * Brand assets have no fixed size — a logo, a favicon and a share image all differ — so only the type is
+   * checked. SVG / ICO are not decodable by image-size, so their dimensions are reported as 0.
+   */
+  public async saveBrandAsset(file: Express.Multer.File): Promise<IUploadedImage> {
+    if (!BRAND_MIME_TYPES.includes(file.mimetype)) {
+      throw new BadRequestException({
+        message: 'Only JPG, PNG, WebP, SVG or ICO images are accepted',
+        statusCode: values.statusCode.ERROR.UPLOAD.INVALID_TYPE,
+      });
+    }
+
+    const { width, height } = BANNER_MIME_TYPES.includes(file.mimetype) ? this.readImage(file) : { width: 0, height: 0 };
+
+    return { url: await this.store(file, BRAND_UPLOAD_DIR), width, height };
   }
 }

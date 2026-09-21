@@ -19,6 +19,16 @@ export namespace SiteContentNamespace {
     SUPPORT = 'support',
     FOOTER = 'footer',
     LEGAL = 'legal',
+    /** Site identity edited on Admin → Settings (name, logo, favicon, share image); not a page. */
+    SETTINGS = 'settings',
+  }
+
+  export interface ISettingsContent {
+    siteName: string;
+    /** URLs from POST /upload/brand; empty = the bundled asset / none. */
+    logo: string;
+    favicon: string;
+    shareImage: string;
   }
 
   export interface IFooterLink {

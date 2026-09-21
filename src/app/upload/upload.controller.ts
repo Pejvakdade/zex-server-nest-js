@@ -1,6 +1,6 @@
 /** --------------------------------------------------------------------------------------------------------------------
  * @file upload.controller.ts
- * @fileOverview admin-only image uploads for the site editors (hero banners, blog covers).
+ * @fileOverview admin-only image uploads for the site editors (hero banners, blog covers, brand assets).
  */
 import {
   BadRequestException,
@@ -25,6 +25,7 @@ import {
   BLOG_COVER_MAX_BYTES,
   BLOG_COVER_MIN_HEIGHT,
   BLOG_COVER_MIN_WIDTH,
+  BRAND_MAX_BYTES,
 } from '@src/values/constants';
 
 import { UploadService } from './upload.service';
@@ -86,6 +87,36 @@ export class UploadController {
     }
 
     const result = await this.uploadService.saveBlogCover(file);
+
+    return {
+      result,
+      message: values.httpCodeMessage[HttpStatus.CREATED],
+      httpCode: HttpStatus.CREATED,
+      statusCode: values.statusCode.SUCCESS.CREATE,
+    };
+  }
+
+  @Post('brand')
+  @AllowedRoles(ADMIN_ROLES)
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: { file: { type: 'string', format: 'binary' } },
+      required: ['file'],
+    },
+  })
+  @ApiOperationWithRoles('Upload a brand asset — logo, favicon or share image (JPG / PNG / WebP / SVG / ICO, any size, max 1 MB)')
+  @UseInterceptors(FileInterceptor('file', { storage: memoryStorage(), limits: { fileSize: BRAND_MAX_BYTES, files: 1 } }))
+  public async uploadBrand(@UploadedFile() file: Express.Multer.File | undefined) {
+    if (!file) {
+      throw new BadRequestException({
+        message: 'No file was sent — use the multipart field "file"',
+        statusCode: values.statusCode.ERROR.UPLOAD.INVALID_TYPE,
+      });
+    }
+
+    const result = await this.uploadService.saveBrandAsset(file);
 
     return {
       result,

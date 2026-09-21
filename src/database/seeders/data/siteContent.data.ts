@@ -284,4 +284,8 @@ export const SITE_CONTENT_SEED_DATA: Array<Partial<SiteContentNamespace.ISiteCon
         'This Privacy Policy explains how ZexServer collects, uses and protects your information.\n\n1. Information We Collect\nAccount details (name, email, billing address), payment information, and technical data such as IP addresses and server logs.\n\n2. How We Use Information\nTo provide and bill for services, respond to support requests, and improve our infrastructure and offerings.\n\n3. Data Sharing\nWe do not sell your personal data. Information may be shared with payment processors and infrastructure partners strictly to deliver our services.\n\n4. Data Security\nWe use industry-standard security measures including encryption in transit and access controls to protect your data.\n\n5. Data Retention\nAccount and billing data is retained for as long as your account is active, and as required by law thereafter.\n\n6. Your Rights\nYou may request access to, correction of, or deletion of your personal data at any time by contacting support.',
     },
   },
+  {
+    page: SiteContentNamespace.EPage.SETTINGS,
+    content: { siteName: 'ZexServer', logo: '', favicon: '', shareImage: '' },
+  },
 ];

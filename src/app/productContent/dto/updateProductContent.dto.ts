@@ -32,6 +32,9 @@ export class UpdateProductContentDto {
   @ApiPropertyOptional() @IsOptional() @IsString() @MaxLength(160) heroHeading1?: string;
   @ApiPropertyOptional() @IsOptional() @IsString() @MaxLength(160) heroHeadingAccent?: string;
   @ApiPropertyOptional() @IsOptional() @IsString() heroSubheading?: string;
+  @ApiPropertyOptional() @IsOptional() @IsString() @MaxLength(300) heroImage?: string;
+  @ApiPropertyOptional() @IsOptional() @IsString() @MaxLength(120) seoTitle?: string;
+  @ApiPropertyOptional() @IsOptional() @IsString() @MaxLength(300) seoDescription?: string;
 
   @ApiPropertyOptional() @IsOptional() @IsString() @MaxLength(160) ctaHeading?: string;
   @ApiPropertyOptional() @IsOptional() @IsString() ctaSubheading?: string;

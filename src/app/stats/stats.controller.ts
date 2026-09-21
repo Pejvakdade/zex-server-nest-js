@@ -44,4 +44,18 @@ export class StatsController {
       statusCode: values.statusCode.SUCCESS.OK,
     };
   }
+
+  @Get('activity')
+  @AllowedRoles(ADMIN_ROLES)
+  @ApiOperationWithRoles('Latest tickets, invoices, services and sign-ups, newest first (Overview + topbar bell)')
+  public async activity() {
+    const result = await this.statsService.activity();
+
+    return {
+      result,
+      message: values.httpCodeMessage[HttpStatus.OK],
+      httpCode: HttpStatus.OK,
+      statusCode: values.statusCode.SUCCESS.OK,
+    };
+  }
 }

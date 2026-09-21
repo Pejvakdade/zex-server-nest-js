@@ -22,6 +22,17 @@ export class ProductContentEntity extends AbstractEntity implements ProductConte
   @Column({ type: 'text', default: '' })
   heroSubheading: string;
 
+  /** Hero background banner URL (POST /upload/banner); empty = gradient only. */
+  @Column({ type: 'varchar', length: 300, default: '' })
+  heroImage: string;
+
+  /** <title> and meta description of the public page; blank falls back to the hero copy. */
+  @Column({ type: 'varchar', length: 120, default: '' })
+  seoTitle: string;
+
+  @Column({ type: 'varchar', length: 300, default: '' })
+  seoDescription: string;
+
   @Column({ type: 'varchar', length: 200, default: '' })
   ctaHeading: string;
 

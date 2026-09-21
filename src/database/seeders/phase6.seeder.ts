@@ -78,6 +78,8 @@ export class Phase6Seeder {
         ...row,
         customerId: customerIds.get(company),
         serviceId: serviceId ? serviceIds.get(serviceId) : null,
+        // The product line follows the billed service, so the Billing table's Product column is filled.
+        product: serviceId ? (DEMO_SERVICES.find((s) => s.serviceId === serviceId)?.product ?? null) : null,
         dueAt: new Date(row.dueAt),
         paidAt: row.paidAt ? new Date(row.paidAt) : null,
       } as unknown as InvoiceEntity);

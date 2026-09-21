@@ -31,6 +31,10 @@ export class InvoiceEntity extends AbstractEntity implements InvoiceNamespace.II
   @JoinColumn({ name: 'serviceId' })
   service?: ServiceEntity;
 
+  /** Product line billed — a plan product or "Software Licenses"; plain text like product_content. */
+  @Column({ type: 'varchar', length: 80, nullable: true })
+  product?: string | null;
+
   @Column({ type: 'numeric', precision: 10, scale: 2, transformer: numericToNumber })
   amount: number;
 

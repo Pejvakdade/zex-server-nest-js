@@ -53,3 +53,8 @@ export const BLOG_COVER_MIN_WIDTH = 1200;
 export const BLOG_COVER_MIN_HEIGHT = 630;
 export const BLOG_COVER_MAX_BYTES = 3 * 1024 * 1024;
 export const BLOG_COVER_UPLOAD_DIR = 'uploads/blog';
+
+/** Brand assets (Admin → Settings): logo, favicon, share image. Any size; SVG / ICO accepted alongside raster. */
+export const BRAND_MAX_BYTES = 1 * 1024 * 1024;
+export const BRAND_MIME_TYPES = [...BANNER_MIME_TYPES, 'image/svg+xml', 'image/x-icon', 'image/vnd.microsoft.icon'];
+export const BRAND_UPLOAD_DIR = 'uploads/brand';

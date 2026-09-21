@@ -98,4 +98,13 @@ export class ServiceService {
   public async countLive(): Promise<number> {
     return this.serviceRepository.countDocuments({ status: In(ServiceNamespace.LIVE_STATUSES) });
   }
+
+  /** Most recently provisioned first, customer populated — feeds the dashboard's Recent activity. */
+  public async recent(limit: number): Promise<Array<ServiceEntity>> {
+    const { docs } = await this.serviceRepository.findWithPagination(
+      {},
+      { page: 1, limit, sort: { createdAt: 'DESC' }, populate: ['customer'] },
+    );
+    return docs;
+  }
 }

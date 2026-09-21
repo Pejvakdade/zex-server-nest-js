@@ -118,4 +118,13 @@ export class InvoiceService {
   public async revenue(): Promise<number> {
     return this.invoiceRepository.sumPaid();
   }
+
+  /** Most recently touched first, customer populated — feeds the dashboard's Recent activity. */
+  public async recent(limit: number): Promise<Array<InvoiceEntity>> {
+    const { docs } = await this.invoiceRepository.findWithPagination(
+      {},
+      { page: 1, limit, sort: { updatedAt: 'DESC' }, populate: ['customer', 'service'] },
+    );
+    return docs;
+  }
 }

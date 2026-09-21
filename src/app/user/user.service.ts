@@ -16,6 +16,7 @@ import { GateKeeperGuard } from '@libs/gateKeeper';
 import { TFindWithPaginationResult } from '@libs/database/src/postgres/type/findWithPagination.type';
 import values from '@src/values';
 
+import { CreateCustomerDto } from './dto/createCustomer.dto';
 import { CreateStaffDto } from './dto/createStaff.dto';
 import { GetUsersDto } from './dto/getUsers.dto';
 import { SignInDto } from './dto/signIn.dto';
@@ -130,6 +131,25 @@ export class UserService implements IUserService {
         statusCode: values.statusCode.ERROR.USER.NOT_FOUND,
       });
     }
+
+    return this.sanitize(user);
+  }
+
+  /** ------------------------------------------------------------------------------------------------------------------
+   * @description staff-created CLIENT account (Admin → Customers → "+ Add Customer"). Same path as sign-up
+   *              but with the status chosen by staff and a temporary password they hand over.
+   */
+  public async createCustomer(dto: CreateCustomerDto): Promise<UserNamespace.IPublicUser> {
+    await this.assertEmailFree(dto.email);
+
+    const user = await this.userRepository.create({
+      fullName: dto.fullName || dto.company,
+      company: dto.company,
+      email: dto.email.toLowerCase(),
+      password: await bcrypt.hash(dto.password, BCRYPT_ROUNDS),
+      userType: UserNamespace.EUserType.CLIENT,
+      status: dto.status ?? UserNamespace.EUserStatus.ACTIVE,
+    } as UserEntity);
 
     return this.sanitize(user);
   }

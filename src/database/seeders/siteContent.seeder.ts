@@ -19,12 +19,27 @@ export class SiteContentSeeder {
   public async seed(): Promise<void> {
     if (await this.siteContentRepository.countDocuments()) {
       await this.backfillAboutStats();
+      await this.insertMissingPages();
       return;
     }
 
     await this.siteContentRepository.insertMany(SITE_CONTENT_SEED_DATA as Array<Omit<SiteContentEntity, '_id'>>);
 
     this.logger.log(`Seeded content for ${SITE_CONTENT_SEED_DATA.length} site pages`);
+  }
+
+  /** A page added after the first seed (e.g. `settings`) gets its seed row on an existing database. */
+  private async insertMissingPages(): Promise<void> {
+    const missing: Array<Omit<SiteContentEntity, '_id'>> = [];
+    for (const item of SITE_CONTENT_SEED_DATA) {
+      if (!(await this.siteContentRepository.findByPage(item.page))) {
+        missing.push(item as Omit<SiteContentEntity, '_id'>);
+      }
+    }
+    if (!missing.length) return;
+
+    await this.siteContentRepository.insertMany(missing);
+    this.logger.log(`Seeded content for ${missing.length} new site page(s): ${missing.map((item) => item.page).join(', ')}`);
   }
 
   /** Fills About stats that are still blank from the seed; a value an admin typed is left alone. */

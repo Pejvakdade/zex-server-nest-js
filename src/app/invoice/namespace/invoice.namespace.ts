@@ -26,6 +26,8 @@ export namespace InvoiceNamespace {
     customer?: UserNamespace.IPublicUser;
     /** The service being billed, if any — nullable so deleting a service keeps its billing history. */
     serviceId?: string | null;
+    /** Product line billed (a plan product or "Software Licenses"); null when unspecified. */
+    product?: string | null;
     amount: number;
     status: EStatus;
     dueAt: Date;

@@ -20,6 +20,12 @@ export class CreateInvoiceDto {
   @IsUUID()
   serviceId?: string | null;
 
+  @ApiPropertyOptional({ example: 'VPS Hosting', description: 'A plan product or "Software Licenses"' })
+  @IsOptional()
+  @IsString()
+  @MaxLength(80)
+  product?: string | null;
+
   @ApiProperty({ example: 340 })
   @Type(() => Number)
   @IsNumber()

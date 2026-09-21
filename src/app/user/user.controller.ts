@@ -24,6 +24,7 @@ import values from '@src/values';
 import { ADMIN_ONLY, ADMIN_ROLES, ANY_SIGNED_IN } from '@src/values/constants';
 import { DeclareApiParam } from '@src/values/apiParam';
 
+import { CreateCustomerDto } from './dto/createCustomer.dto';
 import { CreateStaffDto } from './dto/createStaff.dto';
 import { GetUsersDto } from './dto/getUsers.dto';
 import { SignInDto } from './dto/signIn.dto';
@@ -118,6 +119,20 @@ export class UserController {
   @ApiOperationWithRoles('Create an admin or staff console account')
   public async createStaff(@Body() dto: CreateStaffDto) {
     const result = await this.userService.createStaff(dto);
+
+    return {
+      result,
+      message: values.httpCodeMessage[HttpStatus.CREATED],
+      httpCode: HttpStatus.CREATED,
+      statusCode: values.statusCode.SUCCESS.CREATE,
+    };
+  }
+
+  @Post('customer')
+  @AllowedRoles(ADMIN_ROLES)
+  @ApiOperationWithRoles('Create a customer account on their behalf (Admin → Customers)')
+  public async createCustomer(@Body() dto: CreateCustomerDto) {
+    const result = await this.userService.createCustomer(dto);
 
     return {
       result,
