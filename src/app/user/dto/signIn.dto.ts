@@ -3,7 +3,8 @@ import { IsEmail, IsNotEmpty, IsOptional, IsBoolean, IsString } from 'class-vali
 
 export class SignInDto {
   @ApiProperty({ example: 'you@company.com' })
-  @IsEmail()
+  /** Same wording as a wrong password: the login form must not reveal why a credential was rejected. */
+  @IsEmail({}, { message: 'Email or password is incorrect' })
   email: string;
 
   @ApiProperty({ example: 'ChangeMe123!' })

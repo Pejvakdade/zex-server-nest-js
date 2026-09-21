@@ -42,6 +42,8 @@ export namespace ProductContentNamespace {
     heroHeading1: string;
     heroHeadingAccent: string;
     heroSubheading: string;
+    /** URL of the hero background banner (from POST /upload/banner); empty = gradient only. */
+    heroImage?: string;
 
     ctaHeading: string;
     ctaSubheading: string;

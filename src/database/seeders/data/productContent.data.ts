@@ -17,6 +17,7 @@ export const PRODUCT_CONTENT_SEED_DATA: Array<Partial<ProductContentNamespace.IP
     heroBadge: 'KVM VPS HOSTING',
     heroHeading1: 'High-Performance',
     heroHeadingAccent: 'VPS Hosting',
+    heroImage: '',
     heroSubheading: 'Powerful KVM VPS with NVMe storage, dedicated resources and high-speed global networks.',
     ctaHeading: 'Ready to Deploy Your VPS?',
     ctaSubheading: 'Powerful infrastructure. Simple pricing. No unnecessary complexity.',
@@ -95,6 +96,7 @@ export const PRODUCT_CONTENT_SEED_DATA: Array<Partial<ProductContentNamespace.IP
     heroBadge: 'WINDOWS VPS HOSTING',
     heroHeading1: 'Powerful Windows Servers,',
     heroHeadingAccent: 'Ready in Minutes',
+    heroImage: '',
     heroSubheading:
       'Run your applications, desktop and business workflows on high-performance Windows VPS with maximum compatibility.',
     ctaHeading: 'Ready to Deploy Your Windows VPS?',
@@ -160,6 +162,7 @@ export const PRODUCT_CONTENT_SEED_DATA: Array<Partial<ProductContentNamespace.IP
     heroBadge: 'TRADING VPS',
     heroHeading1: 'Ultra-Low Latency',
     heroHeadingAccent: 'Trading VPS Built for Traders.',
+    heroImage: '',
     heroSubheading:
       'Run your trading platforms and Expert Advisors 24/7 with a fast, stable and low-latency VPS infrastructure.',
     ctaHeading: 'Ready to Deploy Your Trading VPS?',
@@ -230,6 +233,7 @@ export const PRODUCT_CONTENT_SEED_DATA: Array<Partial<ProductContentNamespace.IP
     heroBadge: 'BARE METAL SERVERS',
     heroHeading1: 'Your Server.',
     heroHeadingAccent: '100% Your Hardware.',
+    heroImage: '',
     heroSubheading:
       'Run your most demanding workloads on dedicated, bare-metal hardware. No virtualization, no shared resources.',
     ctaHeading: 'Ready to Deploy Your Dedicated Server?',
@@ -300,6 +304,7 @@ export const PRODUCT_CONTENT_SEED_DATA: Array<Partial<ProductContentNamespace.IP
     heroBadge: 'WEB HOSTING',
     heroHeading1: 'Fast, Secure Web Hosting',
     heroHeadingAccent: 'for Your Website.',
+    heroImage: '',
     heroSubheading: 'Reliable NVMe web hosting with everything you need to launch, grow and manage your website.',
     ctaHeading: 'Ready to Launch Your Website?',
     ctaSubheading: 'Get reliable, fast and secure web hosting for your business today.',
@@ -377,6 +382,7 @@ export const PRODUCT_CONTENT_SEED_DATA: Array<Partial<ProductContentNamespace.IP
     heroBadge: 'WORDPRESS HOSTING',
     heroHeading1: 'Managed WordPress Hosting',
     heroHeadingAccent: 'Built for Speed.',
+    heroImage: '',
     heroSubheading: 'Optimized WordPress hosting with 1-click install, automatic updates and built-in caching.',
     ctaHeading: 'Ready to Launch Your WordPress Site?',
     ctaSubheading: 'Get managed, fast and secure WordPress hosting today.',
@@ -454,6 +460,7 @@ export const PRODUCT_CONTENT_SEED_DATA: Array<Partial<ProductContentNamespace.IP
     heroBadge: 'SOFTWARE LICENSES',
     heroHeading1: 'Licenses, Installed.',
     heroHeadingAccent: 'Configured. Done.',
+    heroImage: '',
     heroSubheading:
       'Genuine control panel and OS licenses for cPanel, Plesk, DirectAdmin, Windows Server and more — with optional install and setup.',
     ctaHeading: 'Ready to Get Licensed?',

@@ -21,7 +21,8 @@ async function bootstrap() {
   app.useLogger(app.get(Logger));
 
   // CSP is left off: Swagger UI at /docs loads inline scripts and would be blocked by helmet's default policy.
-  app.use(helmet({ contentSecurityPolicy: false }));
+  // CORP is relaxed so the dev frontend on another port can render uploaded images served from `public/`.
+  app.use(helmet({ contentSecurityPolicy: false, crossOriginResourcePolicy: { policy: 'cross-origin' } }));
 
   app.use(json({ limit: '15mb' }));
   app.use(urlencoded({ extended: true, limit: '15mb' }));

@@ -93,9 +93,13 @@ Seeders live in `src/database/seeders/` and run from `OnModuleInit`. **Ordering 
 
 Where a dependency chain is a simple single-parent one, express it via the dependent module's own `imports:` array. Where a module is also reached through another module's `imports:` for unrelated DI reasons, don't trust the module-graph distance — instead export the seeder and invoke it explicitly, in order, from the `onModuleInit` of the module that actually depends on it (a plain sequential `await` chain, ordered by JS execution rather than by Nest's scheduling).
 
+### Uploads and the blog
+
+`src/app/upload/` stores admin image uploads under `public/uploads/` (served by `ServeStaticModule`): `POST /upload/banner` insists on an exact 1920×560 hero, `POST /upload/blog-cover` on a minimum 1200×630. `src/app/blog/` is the blog: Markdown bodies stored as-is (the frontend renders and sanitises), slugs derived server-side, public reads cached in Redis under `blog:*` and flushed by `RedisService.delByPattern` on every write.
+
 ### Migrations
 
-`synchronize` is on in development only. `src/database/migrations/` holds the TypeORM migrations (`1789474547277-Init.ts` creates all 11 tables); `PostgresModule` sets `migrationsRun: !synchronize`, so a production boot applies pending migrations itself before the seeders run. `src/database/data-source.ts` is the standalone DataSource for the CLI scripts (same env files as the app); `migrations.config.ts` holds the shared glob. Bun runs the `.ts` migration files directly - there is no compile step.
+`synchronize` is on in development only. `src/database/migrations/` holds the TypeORM migrations (`1789474547277-Init.ts` creates the first 11 tables; `1790000000000-BlogPost.ts` adds `blog_post`); `PostgresModule` sets `migrationsRun: !synchronize`, so a production boot applies pending migrations itself before the seeders run. `src/database/data-source.ts` is the standalone DataSource for the CLI scripts (same env files as the app); `migrations.config.ts` holds the shared glob. Bun runs the `.ts` migration files directly - there is no compile step.
 
 Generating a migration needs a database that reflects the *previous* schema, so run `migration:generate` against a copy, not the synchronize-managed dev DB (against that it diffs to nothing). A dev DB that was created by `synchronize` has no `migrations` table: switching it to `POSTGRES_SYNCHRONIZE=false` would make the app try to re-create every table. Either drop and recreate it, or mark the baseline as applied: `INSERT INTO migrations("timestamp", name) VALUES (1789474547277, 'Init1789474547277')`.
 

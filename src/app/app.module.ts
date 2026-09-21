@@ -42,6 +42,8 @@ import { ServiceModule } from './service/service.module';
 import { InvoiceModule } from './invoice/invoice.module';
 import { TicketModule } from './ticket/ticket.module';
 import { OrderModule } from './order/order.module';
+import { UploadModule } from './upload/upload.module';
+import { BlogModule } from './blog/blog.module';
 
 /** --------------------------------------------------------------------------------------------------------------------
  * @define AppModule the main module
@@ -130,6 +132,8 @@ import { OrderModule } from './order/order.module';
     InvoiceModule,
     TicketModule,
     OrderModule,
+    UploadModule,
+    BlogModule,
     StatsModule,
     HealthModule,
   ],

@@ -28,6 +28,7 @@ export const SITE_CONTENT_SEED_DATA: Array<Partial<SiteContentNamespace.ISiteCon
     content: {
       heroBadge: 'INFRASTRUCTURE THAT SCALES WITH YOU',
       heroHeading: 'Powering Business-Critical Infrastructure.',
+      heroImage: '',
       heroSubheading:
         'VPS, Windows VPS, Trading VPS, Dedicated Servers, Web Hosting, Software Licenses and server management — all on reliable, high-performance infrastructure.',
       primaryCta: 'Explore Our Plans',
@@ -108,6 +109,7 @@ export const SITE_CONTENT_SEED_DATA: Array<Partial<SiteContentNamespace.ISiteCon
     page: SiteContentNamespace.EPage.ABOUT,
     content: {
       heroHeading: 'Infrastructure You Can Depend On.',
+      heroImage: '',
       heroSubheading:
         'ZexServer builds and operates the servers, panels and support that businesses run on — so our customers can focus on their own products, not their infrastructure.',
       founded: '2015',
@@ -151,6 +153,7 @@ export const SITE_CONTENT_SEED_DATA: Array<Partial<SiteContentNamespace.ISiteCon
     page: SiteContentNamespace.EPage.CONTACT,
     content: {
       heroHeading: "We're Here to Help.",
+      heroImage: '',
       heroSubheading:
         'Questions about a plan, a technical issue, or just want to talk infrastructure? Reach out any way that works for you.',
       businessName: 'ZexServer',
@@ -175,6 +178,7 @@ export const SITE_CONTENT_SEED_DATA: Array<Partial<SiteContentNamespace.ISiteCon
     page: SiteContentNamespace.EPage.SUPPORT,
     content: {
       heroHeading: 'How Can We Help?',
+      heroImage: '',
       heroSubheading: 'Browse our knowledge base below, or reach a real engineer any time.',
       kbCategories: [
         { title: 'Getting Started', description: 'First login, server access and initial setup guides.', icon: 'info' },
@@ -241,7 +245,7 @@ export const SITE_CONTENT_SEED_DATA: Array<Partial<SiteContentNamespace.ISiteCon
             { label: 'About Us', url: '/about-us' },
             { label: 'Our Network', url: '#' },
             { label: 'Careers', url: '#' },
-            { label: 'Blog', url: '#' },
+            { label: 'Blog', url: '/blog' },
           ],
         },
         {

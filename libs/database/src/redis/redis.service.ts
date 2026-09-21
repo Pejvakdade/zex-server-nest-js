@@ -23,6 +23,20 @@ export class RedisService implements OnModuleDestroy {
     return this.redis.del(key);
   }
 
+  /** Deletes every key matching a glob (`blog:*`). SCAN rather than KEYS, so a large keyspace never blocks. */
+  async delByPattern(pattern: string): Promise<number> {
+    let cursor = '0';
+    let removed = 0;
+
+    do {
+      const [next, keys] = await this.redis.scan(cursor, 'MATCH', pattern, 'COUNT', 100);
+      cursor = next;
+      if (keys.length) removed += await this.redis.del(...keys);
+    } while (cursor !== '0');
+
+    return removed;
+  }
+
   async ttl(key: string) {
     return this.redis.ttl(key);
   }

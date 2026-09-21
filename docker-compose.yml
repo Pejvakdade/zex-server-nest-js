@@ -50,6 +50,9 @@ services:
     environment:
       APPLICATION_ENV: production
       NODE_ENV: production
+    # Hero banners uploaded from the dashboard; kept out of the image so a redeploy does not drop them.
+    volumes:
+      - zexserver_uploads_volume:/usr/src/app/public/uploads
     restart: unless-stopped
     mem_limit: 512m
     mem_reservation: 256m
@@ -93,5 +96,6 @@ services:
     restart: unless-stopped
 
 volumes:
+  zexserver_uploads_volume:
   zexserver_postgres_volume:
   zexserver_redis_volume:

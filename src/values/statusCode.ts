@@ -76,6 +76,14 @@ const statusCode = {
     SITE_CONTENT: {
       NOT_FOUND: 6450,
     },
+    UPLOAD: {
+      INVALID_TYPE: 6500,
+      WRONG_SIZE: 6501,
+    },
+    BLOG: {
+      NOT_FOUND: 6550,
+      IS_DUPLICATED: 6551,
+    },
   },
 };
 

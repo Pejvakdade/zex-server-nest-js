@@ -33,3 +33,23 @@ export const ANY_SIGNED_IN: Array<UserNamespace.EUserType> = [
 
 /** The global route prefix set in main.ts; anything that builds or matches full paths reads it from here. */
 export const API_PREFIX = '/api/v1';
+
+/** --------------------------------------------------------------------------------------------------------------------
+ * @define hero banner uploads. The public pages render the hero at exactly this height on desktop, so the
+ * dashboard asks for — and the upload endpoint insists on — an image of exactly this size.
+ */
+export const BANNER_WIDTH = 1920;
+export const BANNER_HEIGHT = 560;
+export const BANNER_MAX_BYTES = 2 * 1024 * 1024;
+export const BANNER_MIME_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
+/** Served by ServeStaticModule from `public/`, so the URL is the path under that folder. */
+export const BANNER_UPLOAD_DIR = 'uploads/banners';
+
+/** --------------------------------------------------------------------------------------------------------------------
+ * @define blog cover uploads. Covers are shown as 16:9-ish cards at several sizes, so unlike hero banners only a
+ * minimum size is enforced — anything at least this big is accepted and scaled by the browser.
+ */
+export const BLOG_COVER_MIN_WIDTH = 1200;
+export const BLOG_COVER_MIN_HEIGHT = 630;
+export const BLOG_COVER_MAX_BYTES = 3 * 1024 * 1024;
+export const BLOG_COVER_UPLOAD_DIR = 'uploads/blog';
